@@ -1,0 +1,54 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">BookLibrarySystem</a>
+      <mat-icon svgIcon="book-icon" style="height: 35px;"></mat-icon>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        aria-label="Toggle navigation"
+        [attr.aria-expanded]="isExpanded"
+        (click)="toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+        [ngClass]="{ show: isExpanded }"
+      >
+        <ul class="navbar-nav flex-grow">
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark lead" [routerLink]="['/']">Home</a>
+          </li>
+          <li class="nav-item" *ngIf="isUserAuthenticated" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/books-list']">Books</a>
+          </li>
+        </ul>
+      </div>
+      <form class="d-flex">
+        <ul *ngIf="!isUserAuthenticated" class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/authentication/login']" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">Register</a>
+          </li>
+        </ul>
+        <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <button class="btn btn-link" style="color: #485bd4c5;" (click)="logout()">Logout</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </nav>
+</header>

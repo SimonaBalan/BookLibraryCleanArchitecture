@@ -1,0 +1,30 @@
+﻿using BookLibraryCleanArchitecture.Server.Contracts;
+using BookLibraryCleanArchitecture.Server.Repository;
+using BookLibraryCleanArchitecture.Server.Services;
+using Microsoft.EntityFrameworkCore;
+
+namespace BookLibraryCleanArchitecture.Server.Extensions
+{
+    public static class ServiceExtensions
+    {
+        public static void ConfigureCors(this IServiceCollection services) =>
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<ApplicationDbContext>(opts =>
+                opts.UseSqlServer(configuration.GetConnectionString("LibraryConnection"), b => b.MigrationsAssembly("BookLibraryCleanArchitecture.Server")));
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+        //public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+        //   services.AddScoped<IRepositoryManager, RepositoryManager>();
+    }
+}
