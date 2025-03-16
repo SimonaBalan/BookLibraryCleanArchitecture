@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription, catchError, of, switchMap } from 'rxjs';
 import { Book } from 'src/app/_interfaces/book';
 import { BookService } from '../../shared/services/book.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-books-list',
@@ -41,11 +42,14 @@ export class BooksListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort = {} as MatSort;
 
   constructor(private bookService: BookService,
-     public dialog: MatDialog, private httpClient: HttpClient) {
+     public dialog: MatDialog, 
+     private authService: AuthenticationService,
+     private httpClient: HttpClient) {
 
   }
 
 ngOnInit(): void {
+  this.userRoles = this.authService.getRoles();
   /*this.authorizeService.isAuthenticated().pipe(switchMap(loggedIn => {
     if(loggedIn) {
       return this.authorizeService.getUserRoles().pipe(
@@ -76,15 +80,16 @@ ngAfterViewInit(): void {
 
 loadBooks() {
   this.exampleDatabase = new BookService(this.httpClient);
-  this.bookService.getBooksBySearchCriteria(this.pageIndex, this.pageSize, this.sortColumn, this.sortDirection, this.filters).subscribe((data: { books: Book[], totalItems: number }) => {
-    this.dataSource = new MatTableDataSource<Book>(data['books']);
-    //this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.paginator.length = data['totalItems'];
-    this.totalItems = data['totalItems'];
-
-  },
-  (error: any) => console.error(error));
+  this.bookService.getBooksBySearchCriteria(this.pageIndex, this.pageSize, this.sortColumn, this.sortDirection, this.filters).subscribe({
+    next: (data: { books: Book[], totalItems: number }) => {
+      this.dataSource = new MatTableDataSource<Book>(data['books']);
+      //this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.paginator.length = data['totalItems'];
+      this.totalItems = data['totalItems'];
+    },
+    error: (error: any) => console.error(error)
+  });
 }
 
 filter(event: Event) {
@@ -94,6 +99,23 @@ filter(event: Event) {
   if (this.dataSource.paginator) {
     this.dataSource.paginator.firstPage();
   }
+}
+
+addNew() {
+  /*const version = new Uint16Array([Date.now()]);
+
+  const dialogRef = this.dialog.open(AddBookDialogComponent, {
+    data: { version: new Uint8Array(0) }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === 1) {
+      // After dialog is closed we're doing frontend updates
+      // For add we're just pushing a new row inside DataService
+      this.exampleDatabase?.dataChange.value.push(this.bookService.getDialogData());
+      this.refreshTable();
+    }
+  });*/
 }
 
 onPageChanged(event: PageEvent) {

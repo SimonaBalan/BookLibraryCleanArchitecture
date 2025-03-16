@@ -1,5 +1,5 @@
-﻿using BookLibraryCleanArchitecture.Server.Entities.DataTransferObjects;
-using BookLibraryCleanArchitecture.Server.Entities.Models.BookLibrarySystem.Data.Models;
+﻿using BookLibraryCleanArchitecture.Application.Entities.DataTransferObjects;
+using BookLibraryCleanArchitecture.Domain.UserAggregate;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;

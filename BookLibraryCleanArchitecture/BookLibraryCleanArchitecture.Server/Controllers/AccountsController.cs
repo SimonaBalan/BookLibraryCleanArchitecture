@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using BookLibraryCleanArchitecture.Server.Entities.DataTransferObjects;
-using BookLibraryCleanArchitecture.Server.Entities.Models.BookLibrarySystem.Data.Models;
+using BookLibraryCleanArchitecture.Application.Entities.DataTransferObjects;
+using BookLibraryCleanArchitecture.Domain.UserAggregate;
 using BookLibraryCleanArchitecture.Server.JwtFeatures;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace BookLibraryCleanArchitecture.Server.Controllers
 {

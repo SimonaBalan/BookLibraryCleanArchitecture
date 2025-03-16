@@ -1,14 +1,16 @@
 using BookLibraryCleanArchitecture.Server.Contracts;
-using BookLibraryCleanArchitecture.Server.Entities.Models.BookLibrarySystem.Data.Models;
 using BookLibraryCleanArchitecture.Server.Extensions;
 using BookLibraryCleanArchitecture.Server.JwtFeatures;
-using BookLibraryCleanArchitecture.Server.Repository;
 using BookLibraryCleanArchitecture.Server.Services;
+using BookLibraryCleanArchitecture.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
 using System.Text;
+using BookLibraryCleanArchitecture.Domain.UserAggregate;
+using BookLibraryCleanArchitecture.Server;
+using BookLibraryCleanArchitecture.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "NLog.config"));
@@ -17,8 +19,8 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 builder.Services.ConfigureCors();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureLoggerService();
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<IBooksService, BooksService>();
+//builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddScoped<IBooksService, BooksService>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
 {
@@ -31,8 +33,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
     opt.Lockout.MaxFailedAccessAttempts = 3;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddPersistence()
     .AddDefaultTokenProviders();
+
+builder.Services.AddInfrastructure(builder.Configuration)
+    .AddApplication()
+    .AddPresentation();
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
     opt.TokenLifespan = TimeSpan.FromHours(2));

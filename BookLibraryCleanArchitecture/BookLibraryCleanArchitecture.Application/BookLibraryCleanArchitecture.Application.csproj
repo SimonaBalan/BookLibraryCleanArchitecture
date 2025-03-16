@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="3.5.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="NServiceBus.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookLibraryCleanArchitecture.Domain\BookLibraryCleanArchitecture.Domain.csproj" />
+    <ProjectReference Include="..\BookLibraryCleanArchitecture.Shared\BookLibraryCleanArchitecture.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

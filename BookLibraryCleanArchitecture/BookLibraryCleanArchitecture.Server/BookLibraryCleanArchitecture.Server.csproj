@@ -10,7 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\IBooksService.cs" />
+    <Compile Remove="Repository\ApplicationDbContext.cs" />
+    <Compile Remove="Services\BooksService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.13" />
@@ -29,9 +42,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookLibraryCleanArchitecture.Application\BookLibraryCleanArchitecture.Application.csproj" />
     <ProjectReference Include="..\booklibrarycleanarchitecture.client\booklibrarycleanarchitecture.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\BookLibraryCleanArchitecture.Infrastructure\BookLibraryCleanArchitecture.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Common\" />
   </ItemGroup>
 
 </Project>

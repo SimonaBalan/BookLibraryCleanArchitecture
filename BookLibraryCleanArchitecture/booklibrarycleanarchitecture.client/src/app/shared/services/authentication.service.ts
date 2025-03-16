@@ -58,7 +58,7 @@ export class AuthenticationService {
 
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("token");
-
+    const decodedToken = this.jwtHelper.decodeToken(token);
     return (token && !this.jwtHelper.isTokenExpired(token)) || this.isExternalAuth;
   }
 
@@ -66,9 +66,17 @@ export class AuthenticationService {
   public isUserAdmin = (): boolean => {
     const token = localStorage.getItem("token");
     const decodedToken = this.jwtHelper.decodeToken(token);
-    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    const roles = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 
-    return role === 'Administrator';
+    return roles.includes('Administrator');
+  }
+
+  public getRoles = (): string[] => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    const roles = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return roles;
   }
 
   public signInWithGoogle = () => {
