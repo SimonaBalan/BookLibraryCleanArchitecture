@@ -2,6 +2,7 @@
 using BookLibraryCleanArchitecture.Application.Entities.Common;
 using BookLibraryCleanArchitecture.Application.Entities.DataTransferObjects;
 using BookLibraryCleanArchitecture.Application.Extensions;
+using BookLibraryCleanArchitecture.Domain.BookAggregate;
 using BookLibraryCleanArchitecture.Domain.Contracts.Persistence;
 using BookLibraryCleanArchitecture.Shared;
 using CSharpFunctionalExtensions;
@@ -14,18 +15,18 @@ namespace BookLibraryCleanArchitecture.Application.Books.Queries.GetBooksBySearc
     public class GetBooksBySearchCriteriaQueryHandler :
         IRequestHandler<GetBooksBySearchCriteriaQuery, Result<PagedResponse<BookDto>>>
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IReaderRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetBooksBySearchCriteriaQueryHandler(IBookRepository bookRepository, IMapper mapper)
+        public GetBooksBySearchCriteriaQueryHandler(IReaderRepository repository, IMapper mapper)
         {
-            _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _mapper = mapper;
         }
 
         public async Task<Result<PagedResponse<BookDto>>> Handle(GetBooksBySearchCriteriaQuery query, CancellationToken cancellationToken)
         {
-            var books = await _bookRepository.GetBooksAsync();
+            var books = await _repository.Query<Book>().ToListAsync(cancellationToken); 
             var filteredBooks = _mapper.Map<IEnumerable<BookDto>>(books).AsQueryable();
 
             return await filteredBooks.CreatePagedReponseAsync(query.PageIndex, query.PageSize, query.SortColumn, query.SortDirection, query.Filters);

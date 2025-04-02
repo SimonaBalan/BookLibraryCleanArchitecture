@@ -1,3 +1,5 @@
+import { StatusEnum } from "./book-status";
+
 export interface Book {
   id : number;
   ISBN?: string;
@@ -5,7 +7,7 @@ export interface Book {
   publisher?: string;
   releaseYear: number;
   genre: string;
-  status: string;
+  status: StatusEnum;
   numberOfCopies: number;
   loanedQuantity: number;
   numberOfPages: number;

@@ -24,8 +24,10 @@ namespace BookLibraryCleanArchitecture.Infrastructure
             services.AddScoped<AuditableInterceptor>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            //services.AddScoped<IUserRespository, UserRepository>();
 
+            //services.AddScoped<IUserRespository, UserRepository>();
+            services.AddScoped<IReaderRepository, ReaderRepository>();
+            services.AddScoped<IWriterRepository, WriterRepository>();
             return services;
         }
 

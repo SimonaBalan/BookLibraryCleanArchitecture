@@ -20,6 +20,8 @@ import { GoogleLoginProvider,
   GoogleSigninButtonModule
 } from '@abacritt/angularx-social-login';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
+import { AddBookDialogComponent } from './dialogs/add-book/add-book.dialog.component';
+import { FormsModule } from '@angular/forms';
 
 
 export function tokenGetter() {
@@ -31,6 +33,7 @@ export function tokenGetter() {
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    AddBookDialogComponent,
     ForbiddenComponent,
     NotFoundComponent,
     BooksListComponent
@@ -38,6 +41,7 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     MaterialModule,
     SocialLoginModule,

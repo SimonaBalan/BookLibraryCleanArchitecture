@@ -1,5 +1,5 @@
 ﻿using BookLibraryCleanArchitecture.Application.Entities.DataTransferObjects;
-using BookLibraryCleanArchitecture.Shared;
+using BookLibraryCleanArchitecture.Shared.Errors;
 using CSharpFunctionalExtensions;
 using MediatR;
 

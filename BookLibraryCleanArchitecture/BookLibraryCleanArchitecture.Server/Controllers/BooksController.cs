@@ -10,6 +10,7 @@ using BookLibraryCleanArchitecture.Server.Models.ApiParameters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BookLibraryCleanArchitecture.Server.Controllers
 {
@@ -56,9 +57,11 @@ namespace BookLibraryCleanArchitecture.Server.Controllers
         [ETag]
         public async Task<IActionResult> AddBookAsync(BookDto bookDto)
         {
-            var addedDbBook = new CreateBookCommand(bookDto, bookDto.Authors);
+            var addedDbBookCommand = new CreateBookCommand(bookDto, bookDto.Authors);
 
-            return CreatedAtAction("AddBook", new { id = addedDbBook.Book.Id }, bookDto);
+            var addedDbBook = await _mediator.Send(addedDbBookCommand);
+
+            return CreatedAtAction("AddBook", new { id = addedDbBook.Value.Id }, bookDto);
         }
     }
 }

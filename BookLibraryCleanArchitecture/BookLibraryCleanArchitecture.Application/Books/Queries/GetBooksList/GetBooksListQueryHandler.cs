@@ -1,7 +1,7 @@
 ﻿using BookLibraryCleanArchitecture.Application.Entities.DataTransferObjects;
 using BookLibraryCleanArchitecture.Domain.BookAggregate;
 using BookLibraryCleanArchitecture.Domain.Contracts.Persistence;
-using BookLibraryCleanArchitecture.Shared;
+using BookLibraryCleanArchitecture.Shared.Errors;
 using CSharpFunctionalExtensions;
 using MediatR;
 

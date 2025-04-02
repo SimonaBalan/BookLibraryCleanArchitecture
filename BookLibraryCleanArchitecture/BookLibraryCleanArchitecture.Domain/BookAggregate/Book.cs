@@ -84,6 +84,6 @@ namespace BookLibraryCleanArchitecture.Domain.BookAggregate
     public enum BookStatus
     {
         Available = 0,
-        Lost
+        Lost=1
     }
 }

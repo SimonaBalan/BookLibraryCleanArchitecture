@@ -42,4 +42,17 @@ getBooksBySearchCriteria(pageIndex: number, pageSize: number, sortColumn: string
 
   return this.http.get(environment.serviceUrl + '/books/getBySearchCriteriaAsync', { params });
 }
+
+
+addBook(newBook: Book) {
+  let headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Set the Content-Type to JSON
+  });
+
+  return this.http.post(`${environment.serviceUrl}/books/`, newBook, {headers});
+ }
+
+ getDialogData(){
+  return this.dialogData;
+ }
 }

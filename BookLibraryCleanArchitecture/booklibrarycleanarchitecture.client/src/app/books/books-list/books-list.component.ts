@@ -9,6 +9,7 @@ import { Observable, Subscription, catchError, of, switchMap } from 'rxjs';
 import { Book } from 'src/app/_interfaces/book';
 import { BookService } from '../../shared/services/book.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AddBookDialogComponent } from 'src/app/dialogs/add-book/add-book.dialog.component';
 
 @Component({
   selector: 'app-books-list',
@@ -102,7 +103,7 @@ filter(event: Event) {
 }
 
 addNew() {
-  /*const version = new Uint16Array([Date.now()]);
+  const version = new Uint16Array([Date.now()]);
 
   const dialogRef = this.dialog.open(AddBookDialogComponent, {
     data: { version: new Uint8Array(0) }
@@ -115,7 +116,7 @@ addNew() {
       this.exampleDatabase?.dataChange.value.push(this.bookService.getDialogData());
       this.refreshTable();
     }
-  });*/
+  });
 }
 
 onPageChanged(event: PageEvent) {

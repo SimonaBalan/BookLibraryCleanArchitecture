@@ -29,8 +29,8 @@ namespace BookLibraryCleanArchitecture.Infrastructure.Persistence.Repository
                 try
                 {
                     await _context.Books.AddAsync(newBook);
-                    _context.Entry(newBook).State = EntityState.Added;
-                    await _context.SaveChangesAsync();
+                    /*_context.Entry(newBook).State = EntityState.Added;
+                    //await _context.SaveChangesAsync();
 
                     foreach (var authorId in authorIds)
                     {
@@ -41,10 +41,20 @@ namespace BookLibraryCleanArchitecture.Infrastructure.Persistence.Repository
                             
                             _context.BookAuthors.Add(bookAuthor);
                         }
+                    }*/
+                    var authors = await _context.Authors
+                        .Where(a => authorIds.Contains(a.Id))
+                        .ToListAsync();
+                    
+                    foreach (var author in authors)
+                    {
+                        var bookAuthor = AuthorBook.CreateNew(newBook.Id, author.Id);
+                        _context.BookAuthors.Add(bookAuthor);
                     }
+
                     await _context.SaveChangesAsync();
                     await dbTransaction.CommitAsync();
-                    return await _context.Books.FindAsync(newBook.Id);
+                    return newBook;
                 }
                 catch (Exception ex)
                 {
